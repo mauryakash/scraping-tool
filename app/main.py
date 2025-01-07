@@ -30,3 +30,16 @@ async def scrape(limit: Optional[int] = None, proxy: Optional[str] = None, token
             count += 1
 
     return {"message": f"Scraped and updated {count} products."}
+
+@app.get("/storage")
+async def get_stored_data(token: str = Depends(verify_token)):
+    storage = Storage()
+    data = storage.load()
+    return {"stored_data": data}
+
+@app.get("/cache")
+async def get_cached_data(token: str = Depends(verify_token)):
+    cache = Cache()
+    keys = cache.get_all_keys()
+    cached_data = {key: cache.get(key) for key in keys}
+    return {"cached_data": cached_data}

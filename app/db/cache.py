@@ -9,3 +9,6 @@ class Cache:
 
     def set(self, key, value):
         self.client.set(key, value)
+    
+    def get_all_keys(self):
+        return self.client.keys()
